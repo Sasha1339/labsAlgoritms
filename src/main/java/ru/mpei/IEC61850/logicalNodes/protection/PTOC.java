@@ -1,0 +1,60 @@
+package ru.mpei.IEC61850.logicalNodes.protection;
+
+import ru.mpei.IEC61850.datatypes.measurements.WYE;
+import ru.mpei.IEC61850.datatypes.protection.ACD;
+import ru.mpei.IEC61850.datatypes.protection.ACT;
+import ru.mpei.IEC61850.datatypes.setting.ASG;
+import ru.mpei.IEC61850.datatypes.setting.ING;
+import ru.mpei.IEC61850.logicalNodes.comman.LN;
+
+public class PTOC extends LN {
+
+    //Str = start, when current more then set
+    // StrVal = set ASG - max value of current
+    // OpDITmms
+
+    public static double dt = 0.250; //мсек
+
+    //Входы
+
+    public WYE A = new WYE();
+
+    //Выходы
+
+    public ACD Str = new ACD();
+    public ACT Op = new ACT();
+
+    //Уставки
+
+    public ASG StrVal = new ASG();
+    public ING OpDlTmms = new ING();
+
+    //Переменные
+
+    private int cntTimeA = 0;
+    private int cntTimeB = 0;
+    private int cntTimeC = 0;
+
+
+    @Override
+    public void process() {
+        boolean strA = A.getPhsA().getCVal().getMag().getF().getValue() > StrVal.getSetMag().getF().getValue();
+        boolean strB = A.getPhsB().getCVal().getMag().getF().getValue() > StrVal.getSetMag().getF().getValue();
+        boolean strC = A.getPhsC().getCVal().getMag().getF().getValue() > StrVal.getSetMag().getF().getValue();
+
+        Str.getGeneral().setValue(strA || strB || strC);
+        Str.getPhsA().setValue(strA);
+        Str.getPhsB().setValue(strB);
+        Str.getPhsC().setValue(strC);
+
+        if (strA) cntTimeA++; else cntTimeA = 0;
+        if (strA) cntTimeA++; else cntTimeA = 0;
+        if (strA) cntTimeA++; else cntTimeA = 0;
+
+        Op.getPhsA().setValue(cntTimeA * dt > OpDlTmms.getSetVal().getValue());
+        Op.getPhsB().setValue(cntTimeB * dt > OpDlTmms.getSetVal().getValue());
+        Op.getPhsC().setValue(cntTimeC * dt > OpDlTmms.getSetVal().getValue());
+        Op.getGeneral().setValue(Op.getPhsA().getValue() || Op.getPhsB().getValue() || Op.getPhsC().getValue());
+
+    }
+}
