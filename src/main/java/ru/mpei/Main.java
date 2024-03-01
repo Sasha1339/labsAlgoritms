@@ -29,6 +29,7 @@ public class Main {
         PTOC ptoc = new PTOC();
         ptoc.A = mmxu.A;
         ptoc.StrVal.getSetMag().getF().setValue(5000.0); // задаем уставку
+        ptoc.OpDlTmms.getSetVal().setValue(500); // задаем время срабатывания
         logicalNodes.add(ptoc);
 
 //        NHMI nhmi = new NHMI;

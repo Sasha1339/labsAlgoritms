@@ -27,7 +27,7 @@ public class PTOC extends LN {
     //Уставки
 
     public ASG StrVal = new ASG();
-    public ING OpDlTmms = new ING();
+    public ING OpDlTmms = new ING(); //500 мс?
 
     //Переменные
 
