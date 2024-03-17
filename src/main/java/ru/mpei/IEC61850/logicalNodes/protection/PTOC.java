@@ -5,7 +5,7 @@ import ru.mpei.IEC61850.datatypes.protection.ACD;
 import ru.mpei.IEC61850.datatypes.protection.ACT;
 import ru.mpei.IEC61850.datatypes.setting.ASG;
 import ru.mpei.IEC61850.datatypes.setting.ING;
-import ru.mpei.IEC61850.logicalNodes.comman.LN;
+import ru.mpei.IEC61850.logicalNodes.common.LN;
 
 public class PTOC extends LN {
 

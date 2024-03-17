@@ -1,4 +1,4 @@
-package ru.mpei.IEC61850.logicalNodes.comman;
+package ru.mpei.IEC61850.logicalNodes.common;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

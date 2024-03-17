@@ -2,11 +2,9 @@ package ru.mpei.IEC61850.logicalNodes.measurements;
 
 import ru.mpei.IEC61850.datatypes.measurements.SAV;
 import ru.mpei.IEC61850.datatypes.measurements.WYE;
-import ru.mpei.IEC61850.logicalNodes.comman.LN;
+import ru.mpei.IEC61850.logicalNodes.common.LN;
 import ru.mpei.IEC61850.utils.Filter;
 import ru.mpei.IEC61850.utils.MsdFilter;
-
-import java.lang.reflect.Field;
 
 public class MMXU extends LN {
     //в будущем здесь будет фильтр Фурье

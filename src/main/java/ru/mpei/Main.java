@@ -1,6 +1,8 @@
 package ru.mpei;
 
-import ru.mpei.IEC61850.logicalNodes.comman.LN;
+import ru.mpei.IEC61850.logicalNodes.common.LN;
+import ru.mpei.IEC61850.logicalNodes.hmi.NHMI;
+import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 import ru.mpei.IEC61850.logicalNodes.measurements.MMXU;
 import ru.mpei.IEC61850.logicalNodes.protection.PTOC;
 import ru.mpei.IEC61850.logicalNodes.protocol.LSVS;
@@ -28,17 +30,23 @@ public class Main {
 
         PTOC ptoc = new PTOC();
         ptoc.A = mmxu.A;
-        ptoc.StrVal.getSetMag().getF().setValue(5000.0); // задаем уставку
+        ptoc.StrVal.getSetMag().getF().setValue(1000.0); // задаем уставку
         ptoc.OpDlTmms.getSetVal().setValue(500); // задаем время срабатывания
         logicalNodes.add(ptoc);
 
-//        NHMI nhmi = new NHMI;
+        NHMI nhmi = new NHMI();
 //        nhmi.addSignal("Токи", new NHMISignal("IaRMS", mmxu.A.getPhsA().getCVal().getMag().getF()
 //         new NHMISignal("Уставка", ptoc.StrVal)
 
+        nhmi.addSignals(
+
+        new NHMISignal("Срабатывание", ptoc.Op.getPhsA()));
+
+        logicalNodes.add(nhmi);
+
         while (lsvs.hasNext()) {
             logicalNodes.forEach(LN::process);
-            System.out.printf(": ", lsvs.getOut().get(0).getInstMag().getF().getValue());
+            //System.out.printf(": ", lsvs.getOut().get(0).getInstMag().getF().getValue());
         }
 
 

@@ -3,7 +3,7 @@ package ru.mpei.IEC61850.logicalNodes.protocol;
 import lombok.Getter;
 import lombok.Setter;
 import ru.mpei.IEC61850.datatypes.measurements.SAV;
-import ru.mpei.IEC61850.logicalNodes.comman.LN;
+import ru.mpei.IEC61850.logicalNodes.common.LN;
 
 import java.io.File;
 import java.nio.file.Files;
