@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import ru.mpei.IEC61850.datatypes.measurements.SAV;
 import ru.mpei.IEC61850.logicalNodes.LN;
+import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -58,6 +59,11 @@ public class LSVS extends LN {
 
     @Override
     public <T extends LN> void connect(T logicNode) {
+    }
+
+    @Override
+    public NHMISignal getSignal(String name, String parameters) {
+        return null;
     }
 
     public boolean hasNext() {

@@ -3,6 +3,8 @@ package ru.mpei.IEC61850.logicalNodes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.mpei.IEC61850.datatypes.common.Attribute;
+import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 
 import javax.xml.bind.annotation.*;
 
@@ -24,5 +26,7 @@ public abstract class LN {
     public abstract void build(String pref, String name, Integer id, String[] parameters); // autobuild
 
     public abstract <T extends LN> void connect(T logicNode); // autoconnect
+
+    public abstract NHMISignal getSignal(String name,String parameters);
 
 }

@@ -19,4 +19,9 @@ public class InfoNodes {
     @XmlElement(name="link")
     private List<Link> link = new ArrayList<>();
 
+    @XmlElementWrapper(name="signals")
+    @XmlElement(name="nhmi")
+    private List<InfoNHMI> signalNHMI = new ArrayList<>();
+
+
 }

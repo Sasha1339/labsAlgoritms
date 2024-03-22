@@ -7,6 +7,7 @@ import ru.mpei.IEC61850.datatypes.breaker.CodedEnum;
 import ru.mpei.IEC61850.datatypes.breaker.DPC;
 import ru.mpei.IEC61850.datatypes.protection.ACT;
 import ru.mpei.IEC61850.logicalNodes.LN;
+import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 import ru.mpei.IEC61850.logicalNodes.measurements.MMXU;
 import ru.mpei.IEC61850.logicalNodes.protection.PTOC;
 
@@ -37,6 +38,8 @@ public class CSWI extends LN {
                         e.getPhsC().getValue())
                 .findAny().orElse(new ACT());
 
+        System.out.println(OpOpn.getGeneral().getValue());
+
         Pos.getStVal().setValue(OpOpn.getGeneral().getValue() ||
                 OpOpn.getPhsA().getValue() ||
                 OpOpn.getPhsB().getValue() ||
@@ -56,5 +59,10 @@ public class CSWI extends LN {
         } else {
             log.error("Не правильно задан ID логического угла в конфигурации связей");
         }
+    }
+
+    @Override
+    public NHMISignal getSignal(String name,String parameters) {
+        return new NHMISignal(name, Pos.getStVal());
     }
 }

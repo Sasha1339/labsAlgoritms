@@ -96,6 +96,11 @@ public class NHMIP extends LN {
 	public <T extends LN> void connect(T logicNode) {
 	}
 
+	@Override
+	public NHMISignal getSignal(String name, String parameters) {
+		return null;
+	}
+
 
 	/**
 	 * Добавить группу сигналов

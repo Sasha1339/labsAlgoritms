@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.mpei.IEC61850.datatypes.measurements.SAV;
 import ru.mpei.IEC61850.datatypes.measurements.WYE;
 import ru.mpei.IEC61850.logicalNodes.LN;
+import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 import ru.mpei.IEC61850.logicalNodes.protocol.LSVS;
 import ru.mpei.IEC61850.utils.Filter;
 import ru.mpei.IEC61850.utils.MsdFilter;
@@ -61,5 +62,21 @@ public class MMXU extends LN {
         } else {
             log.error("Не правильно задан ID логического угла в конфигурации связей");
         }
+    }
+
+    @Override
+    public NHMISignal getSignal(String name, String parameters) {
+        if (parameters != null) {
+            if (parameters.contains("U") || parameters.contains("u")){
+                if (parameters.contains("A") || parameters.contains("a")) return new NHMISignal(name, UaInst.getInstMag().getF());
+                else if (parameters.contains("B") || parameters.contains("b")) return new NHMISignal(name, UbInst.getInstMag().getF());
+                else if (parameters.contains("C") || parameters.contains("c")) return new NHMISignal(name, UcInst.getInstMag().getF());
+            } else if (parameters.contains("I") || parameters.contains("i")){
+                if (parameters.contains("A") || parameters.contains("a")) return new NHMISignal(name, IaInst.getInstMag().getF());
+                else if (parameters.contains("B") || parameters.contains("b")) return new NHMISignal(name, IbInst.getInstMag().getF());
+                else if (parameters.contains("C") || parameters.contains("c")) return new NHMISignal(name, IcInst.getInstMag().getF());
+            }
+        }
+    return new NHMISignal(name, IaInst.getInstMag().getF());
     }
 }

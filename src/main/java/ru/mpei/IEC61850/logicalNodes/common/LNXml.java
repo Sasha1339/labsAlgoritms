@@ -3,6 +3,7 @@ package ru.mpei.IEC61850.logicalNodes.common;
 
 import lombok.Data;
 import ru.mpei.IEC61850.logicalNodes.LN;
+import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
@@ -26,5 +27,10 @@ public class LNXml extends LN {
 
     @Override
     public <T extends LN> void connect(T logicNode) {
+    }
+
+    @Override
+    public NHMISignal getSignal(String name,String parameters) {
+        return null;
     }
 }

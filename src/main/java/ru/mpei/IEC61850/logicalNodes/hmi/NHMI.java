@@ -15,6 +15,7 @@ import org.jfree.data.Range;
 import org.jfree.data.general.Series;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import ru.mpei.IEC61850.datatypes.breaker.CodedEnum;
 import ru.mpei.IEC61850.datatypes.common.Attribute;
 import ru.mpei.IEC61850.logicalNodes.LN;
 import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
@@ -60,6 +61,7 @@ public class NHMI extends LN {
 		datasets.forEach((series, rawData) -> {
 			if(rawData.getValue() instanceof Number) series.add(currentTime, (Number) rawData.getValue(), false);
 			else if(rawData.getValue() instanceof Boolean) series.add(currentTime, (Boolean) rawData.getValue() ? 1 : 0, false);
+			else if(rawData.getValue() instanceof CodedEnum) series.add(currentTime, (CodedEnum) rawData.getValue() == CodedEnum.off ? 1 : 0, false);
 		});
 
 		/* Период обновления */
@@ -78,6 +80,11 @@ public class NHMI extends LN {
 
 	@Override
 	public <T extends LN> void connect(T logicNode) {
+	}
+
+	@Override
+	public NHMISignal getSignal(String name, String parameters) {
+		return null;
 	}
 
 

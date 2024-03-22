@@ -2,6 +2,7 @@ package ru.mpei.IEC61850.logicalNodes.time;
 
 import ru.mpei.IEC61850.datatypes.common.Attribute;
 import ru.mpei.IEC61850.logicalNodes.LN;
+import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 
 public class Time extends LN {
 
@@ -26,5 +27,10 @@ public class Time extends LN {
 
     @Override
     public <T extends LN> void connect(T logicNode) {
+    }
+
+    @Override
+    public NHMISignal getSignal(String name, String parameters) {
+        return null;
     }
 }

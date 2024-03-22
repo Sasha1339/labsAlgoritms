@@ -3,6 +3,8 @@ package ru.mpei.builder;
 import lombok.SneakyThrows;
 import org.reflections.Reflections;
 import ru.mpei.IEC61850.logicalNodes.LN;
+import ru.mpei.IEC61850.logicalNodes.hmi.NHMI;
+import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 import ru.mpei.IEC61850.logicalNodes.protocol.LSVS;
 
 import javax.xml.bind.JAXBContext;
@@ -13,26 +15,40 @@ import java.util.*;
 
 
 public class Postprocessor {
-    private Map<Integer, LN> objectsLogicNodes = new HashMap<>();
+    private static Map<Integer, LN> objectsLogicNodes = new HashMap<>();
 
-    private List<LN> logicalNodesList = new ArrayList<>();
+    private static InfoNodes infoNodes = new InfoNodes();
 
+    private static List<LN> logicalNodesList = new ArrayList<>();
 
     @SneakyThrows
-    private InfoNodes getInfo(){
+    private static void getInfo(){
         JAXBContext context = JAXBContext.newInstance(InfoNodes.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        InfoNodes infoNodes = (InfoNodes) unmarshaller.unmarshal(
+        infoNodes = (InfoNodes) unmarshaller.unmarshal(
                 new File("src/main/resources/data.xml")
         );
-        return infoNodes;
     }
 
-    public void execute(){
+    static {
+        getInfo();
+        build();
+        setNHMI();
+        execute();
+    }
+
+    public static void setNHMI(){
+        NHMI nhmi = new NHMI();
+        infoNodes.getSignalNHMI().forEach(e -> {
+            nhmi.addSignals(e.getName(), objectsLogicNodes.get(e.getId()).getSignal(e.getName(), e.getParameters()));
+        });
+        logicalNodesList.add(nhmi);
+    }
+
+    public static void build(){
 
         Reflections reflections = new Reflections(LN.class);
         Set<Class<? extends LN>> logicalNodes = reflections.getSubTypesOf(LN.class);
-        InfoNodes infoNodes = getInfo();
 
         infoNodes.getLogicalNodes().forEach(e -> {
             Optional<Class<? extends LN>> lNode = logicalNodes.stream()
@@ -71,12 +87,14 @@ public class Postprocessor {
                     .get(l.getDestination());
 
             ln.connect(objectsLogicNodes.get(l.getSource()));
+            if (!logicalNodesList.contains(ln)){
+                logicalNodesList.add(ln);
+            }
 
-            logicalNodesList.add(ln);
         });
     }
 
-    public void process(){
+    public static void execute(){
         LSVS lsvs = (LSVS) logicalNodesList.stream().filter(e -> e.getClass() == LSVS.class).findFirst().orElse(new LSVS());
         while (lsvs.hasNext()) {
             logicalNodesList.forEach(LN::process);

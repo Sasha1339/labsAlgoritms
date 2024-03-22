@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import ru.mpei.IEC61850.datatypes.breaker.*;
 import ru.mpei.IEC61850.logicalNodes.LN;
+import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 import ru.mpei.IEC61850.logicalNodes.measurements.MMXU;
 
 @Getter
@@ -42,5 +43,10 @@ public class XCBR extends LN {
         } else {
             log.error("Не правильно задан ID логического угла в конфигурации связей");
         }
+    }
+
+    @Override
+    public NHMISignal getSignal(String name,String parameters) {
+        return new NHMISignal(name, Pos.getStVal());
     }
 }

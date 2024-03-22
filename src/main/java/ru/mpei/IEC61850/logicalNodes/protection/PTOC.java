@@ -7,6 +7,7 @@ import ru.mpei.IEC61850.datatypes.protection.ACT;
 import ru.mpei.IEC61850.datatypes.setting.ASG;
 import ru.mpei.IEC61850.datatypes.setting.ING;
 import ru.mpei.IEC61850.logicalNodes.LN;
+import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 import ru.mpei.IEC61850.logicalNodes.measurements.MMXU;
 
 @Slf4j
@@ -79,5 +80,13 @@ public class PTOC extends LN {
         } else {
             log.error("Не правильно задан ID логического угла в конфигурации связей");
         }
+    }
+
+    @Override
+    public NHMISignal getSignal(String name, String parameters) {
+        if (parameters.contains("trigger")){
+            return new NHMISignal(name, Str.getPhsA());
+        }
+        return new NHMISignal(name, Op.getPhsA());
     }
 }
