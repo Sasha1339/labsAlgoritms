@@ -1,0 +1,60 @@
+package ru.mpei.IEC61850.logicalNodes.breaker;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import ru.mpei.IEC61850.datatypes.breaker.CodedEnum;
+import ru.mpei.IEC61850.datatypes.breaker.DPC;
+import ru.mpei.IEC61850.datatypes.protection.ACT;
+import ru.mpei.IEC61850.logicalNodes.LN;
+import ru.mpei.IEC61850.logicalNodes.measurements.MMXU;
+import ru.mpei.IEC61850.logicalNodes.protection.PTOC;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
+@Slf4j
+public class CSWI extends LN {
+
+    //входы
+    public List<ACT> OpOpns = new ArrayList<>();
+    public ACT OpOpn = new ACT();
+
+
+    //выходы
+    public DPC Pos = new DPC();
+
+
+    @Override
+    public void process() {
+
+        OpOpn = OpOpns.stream()
+                .filter(e -> e.getGeneral().getValue() ||
+                        e.getPhsA().getValue() ||
+                        e.getPhsB().getValue() ||
+                        e.getPhsC().getValue())
+                .findAny().orElse(new ACT());
+
+        Pos.getStVal().setValue(OpOpn.getGeneral().getValue() ||
+                OpOpn.getPhsA().getValue() ||
+                OpOpn.getPhsB().getValue() ||
+                OpOpn.getPhsC().getValue() ? CodedEnum.off : CodedEnum.on);;
+    }
+    @Override
+    public void build(String pref, String name, Integer id, String[] parameters) {
+        this.pref = pref;
+        this.clazz = name;
+        this.inst = id;
+    }
+
+    @Override
+    public <T extends LN> void connect(T logicNode) {
+        if (logicNode instanceof PTOC ptoc){
+            OpOpns.add(ptoc.Op);
+        } else {
+            log.error("Не правильно задан ID логического угла в конфигурации связей");
+        }
+    }
+}

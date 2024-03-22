@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infoNodes>
+    <logicalNodes>
+        <LN prefix="1" name="PTOC" id="1101" parameters="500, 1000"/>
+        <LN prefix="2" name="PTOC" id="2103" parameters="500, 1000"/>
+    </logicalNodes>
+    <links>
+        <link source="1101" dest="2103"/>
+    </links>
+</infoNodes>

@@ -9,7 +9,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.general.Series;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import ru.mpei.IEC61850.logicalNodes.common.LN;
+import ru.mpei.IEC61850.logicalNodes.LN;
 import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMIPoint;
 import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 
@@ -83,6 +83,17 @@ public class NHMIP extends LN {
 			setCurrentRange(currentRange);
 			datasets.values().forEach(Series::fireSeriesChanged);
 		}
+	}
+
+	@Override
+	public void build(String pref, String name, Integer id, String[] parameters) {
+		this.pref = pref;
+		this.clazz = name;
+		this.inst = id;
+	}
+
+	@Override
+	public <T extends LN> void connect(T logicNode) {
 	}
 
 

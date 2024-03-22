@@ -3,8 +3,6 @@ package ru.mpei.IEC61850.utils;
 import ru.mpei.IEC61850.datatypes.measurements.SAV;
 import ru.mpei.IEC61850.datatypes.measurements.Vector;
 
-import java.util.Map;
-
 public class MsdFilter extends Filter{
 
     private final double[] buffer;
@@ -25,7 +23,6 @@ public class MsdFilter extends Filter{
         this.buffer[cnt] = instValueMod;
 
         vector.getMag().getF().setValue(this.sum * k);
-
         if (++cnt >= buffer.length){
             cnt = 0;
         }

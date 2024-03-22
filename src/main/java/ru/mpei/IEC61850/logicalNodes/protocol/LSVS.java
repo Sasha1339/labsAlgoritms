@@ -2,12 +2,14 @@ package ru.mpei.IEC61850.logicalNodes.protocol;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import ru.mpei.IEC61850.datatypes.measurements.SAV;
-import ru.mpei.IEC61850.logicalNodes.common.LN;
+import ru.mpei.IEC61850.logicalNodes.LN;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,16 +20,12 @@ public class LSVS extends LN {
     private String path;
     private String fileName;
 
-    private List<String> cfgFileList = new ArrayList<>();
-    private List<String> datFileList = new ArrayList<>();
-
-    private List<Double> kAList = new ArrayList<>();
-    private List<Double> kBList = new ArrayList<>();
+    private List<String> csvFileList = new ArrayList<>();
 
     private int analogNumber = 0;
     private int digitalNumber = 0;
 
-    private Iterator<String> datIterator;
+    private Iterator<String> csvIterator;
 
     private final List<SAV> out = new ArrayList<>();
 
@@ -39,51 +37,51 @@ public class LSVS extends LN {
 
     @Override
     public void process() {
-        if (this.datIterator.hasNext()) {
-            String[] str = this.datIterator.next().split(",");
-            for (int i = 2, j = 0; i < this.analogNumber + 2; i++,  j++) {
-                double value = Double.parseDouble(str[i])*this.kAList.get(j) + this.kBList.get(j);
+        if (this.csvIterator.hasNext()) {
+            String[] str = this.csvIterator.next().split(",");
+            for (int i = 1, j = 0; i < this.analogNumber + 1; i++, j++) {
+                double value = Double.parseDouble(str[i]);
                 this.out.get(j).getInstMag().getF().setValue(value);
             }
         }
     }
 
+    @Override
+    @SneakyThrows
+    public void build(String pref, String name, Integer id, String[] parameters) {
+        setPath("C:\\Users\\serge\\OneDrive\\Рабочий стол\\1 курс магистратура, Э-13м-23\\Алгоритмы РЗА\\Опыты\\Начало линии\\");
+        setFileName(parameters[0]);
+        this.pref = pref;
+        this.clazz = name;
+        this.inst = id;
+    }
+
+    @Override
+    public <T extends LN> void connect(T logicNode) {
+    }
+
     public boolean hasNext() {
-        return this.datIterator.hasNext();
+        return this.csvIterator.hasNext();
     }
 
     public void setFileName(String fileName) throws Exception{
         this.fileName = fileName;
 
-        String cfgPath = path + fileName + ".cfg";
-        String datPath = path + fileName + ".dat";
+        String csvPath = path + fileName + ".csv";
 
-        File cfgFile = new File(cfgPath);
-        File datFile = new File(datPath);
+        File csvFile = new File(csvPath);
 
-        if (!cfgFile.exists()) throw new Exception("Путь к файлу указан не верно!");
-        if (!datFile.exists()) throw new Exception("Путь к файлу указан не верно!");
+        if (!csvFile.exists()) throw new Exception("Путь к файлу указан не верно!");
 
-        this.cfgFileList = Files.readAllLines(cfgFile.toPath());
-        this.datFileList = Files.readAllLines(datFile.toPath());
+        this.csvFileList = Files.readAllLines(csvFile.toPath());
 
-        String strNumber = this.cfgFileList.get(1)
-                .replace("A", "")
-                .replace("D", "");
+        String strNumber = this.csvFileList.get(0);
 
-        this.analogNumber = Integer.parseInt(strNumber.split(",")[1]);
-        this.digitalNumber = Integer.parseInt(strNumber.split(",")[2]);
+        this.analogNumber = Arrays.stream(strNumber.split(",")).filter(e -> e.contains("Branch")).toList().size();
+        this.digitalNumber = Arrays.stream(strNumber.split(",")).filter(e -> e.contains("CTLs")).toList().size();
 
-        for (int i = 2; i < this.analogNumber + 2; i++){
-            double kA = Double.parseDouble(this.cfgFileList.get(i).split(",")[5]);
-            double kB = Double.parseDouble(this.cfgFileList.get(i).split(",")[6]);
-
-            this.kAList.add(kA);
-            this.kBList.add(kB);
-        }
-
-        this.datIterator = this.datFileList.iterator();
-
+        this.csvIterator = this.csvFileList.iterator();
+        this.csvIterator.next();
     }
 
 }

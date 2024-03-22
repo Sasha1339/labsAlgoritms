@@ -1,11 +1,14 @@
 package ru.mpei;
 
-import ru.mpei.IEC61850.logicalNodes.common.LN;
+import ru.mpei.IEC61850.logicalNodes.breaker.CSWI;
+import ru.mpei.IEC61850.logicalNodes.breaker.XCBR;
+import ru.mpei.IEC61850.logicalNodes.LN;
 import ru.mpei.IEC61850.logicalNodes.hmi.NHMI;
 import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 import ru.mpei.IEC61850.logicalNodes.measurements.MMXU;
 import ru.mpei.IEC61850.logicalNodes.protection.PTOC;
 import ru.mpei.IEC61850.logicalNodes.protocol.LSVS;
+import ru.mpei.IEC61850.logicalNodes.time.Time;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,17 +33,32 @@ public class Main {
 
         PTOC ptoc = new PTOC();
         ptoc.A = mmxu.A;
-        ptoc.StrVal.getSetMag().getF().setValue(1000.0); // задаем уставку
+        ptoc.StrVal.getSetMag().getF().setValue(0.1); // задаем уставку
         ptoc.OpDlTmms.getSetVal().setValue(500); // задаем время срабатывания
         logicalNodes.add(ptoc);
+
+        CSWI cswi = new CSWI();
+        cswi.OpOpns.add(ptoc.Op);
+        logicalNodes.add(cswi);
+
+        XCBR xcbr = new XCBR();
+        xcbr.Pos = cswi.Pos;
+        logicalNodes.add(xcbr);
+
+        Time time = new Time();
+        logicalNodes.add(time);
 
         NHMI nhmi = new NHMI();
 //        nhmi.addSignal("Токи", new NHMISignal("IaRMS", mmxu.A.getPhsA().getCVal().getMag().getF()
 //         new NHMISignal("Уставка", ptoc.StrVal)
 
         nhmi.addSignals(
-
-        new NHMISignal("Срабатывание", ptoc.Op.getPhsA()));
+            new NHMISignal("Ia",time.t, mmxu.IaInst.getInstMag().getF()),
+             new NHMISignal("Срабатывание",time.t, ptoc.Str.getPhsA()),
+               new NHMISignal("Время",time.t, ptoc.Op.getPhsA()),
+//
+        new NHMISignal("Выключатель",time.t, cswi.OpOpn.getGeneral())
+        );
 
         logicalNodes.add(nhmi);
 

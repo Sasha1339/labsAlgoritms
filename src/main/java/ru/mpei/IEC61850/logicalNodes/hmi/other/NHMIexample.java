@@ -2,7 +2,7 @@ package ru.mpei.IEC61850.logicalNodes.hmi.other;
 
 
 import ru.mpei.IEC61850.datatypes.common.Attribute;
-import ru.mpei.IEC61850.logicalNodes.common.LN;
+import ru.mpei.IEC61850.logicalNodes.LN;
 import ru.mpei.IEC61850.logicalNodes.hmi.NHMI;
 import ru.mpei.IEC61850.logicalNodes.hmi.NHMIP;
 
