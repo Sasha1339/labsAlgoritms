@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <infoNodes>
     <logicalNodes>
-        <LN prefix="1" name="PTOC" id="1101" parameters="5, 100"/>
-        <LN prefix="2" name="PTOC" id="2103" parameters="2, 500"/>
+        <LN prefix="1" name="PTOC" id="1101" parameters="15, 100"/>
+        <LN prefix="2" name="PTOC" id="2103" parameters="9, 500"/>
         <LN prefix="1" name="MMXU" id="1802" parameters=""/>
         <LN prefix="1" name="LSVS" id="1006" parameters="PhA80"/>
         <LN prefix="1" name="CSWI" id="2602" parameters=""/>
@@ -17,10 +17,12 @@
         <link source="2602" dest="1404"/>
     </links>
     <signals>
-        <nhmi name="Ia" id="1802" parameters="Ib"/>
-        <nhmi name="Breaker" id="1404" parameters=""/>
-        <nhmi name="Срабатывание time" id="2103" parameters=""/>
-        <nhmi name="Срабатывание trigger" id="2103" parameters="trigger"/>
-        <nhmi name="Срабатывание" id="1101" parameters=""/>
+        <nhmi name="Ia" id="1802" parameters="Ia"/>
+        <nhmi name="Ib" id="1802" parameters="Ib"/>
+        <nhmi name="Ic" id="1802" parameters="Ic"/>
+        <nhmi name="АУВ" id="2602" parameters=""/>
+        <nhmi name="Выключатель" id="1404" parameters=""/>
+        <nhmi name="Срабатывание 1 ст." id="1101" parameters=""/>
+        <nhmi name="Срабатывание 2 ст." id="2103" parameters=""/>
     </signals>
 </infoNodes>

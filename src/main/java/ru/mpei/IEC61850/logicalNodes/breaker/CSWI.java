@@ -13,6 +13,7 @@ import ru.mpei.IEC61850.logicalNodes.protection.PTOC;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -31,19 +32,22 @@ public class CSWI extends LN {
     @Override
     public void process() {
 
-        OpOpn = OpOpns.stream()
+        Optional<ACT> Op = OpOpns.stream()
                 .filter(e -> e.getGeneral().getValue() ||
                         e.getPhsA().getValue() ||
                         e.getPhsB().getValue() ||
                         e.getPhsC().getValue())
-                .findAny().orElse(new ACT());
-
-        System.out.println(OpOpn.getGeneral().getValue());
-
-        Pos.getStVal().setValue(OpOpn.getGeneral().getValue() ||
-                OpOpn.getPhsA().getValue() ||
-                OpOpn.getPhsB().getValue() ||
-                OpOpn.getPhsC().getValue() ? CodedEnum.off : CodedEnum.on);;
+                .findAny();
+        if (Op.isPresent()){
+            OpOpn.getGeneral().setValue(Op.get().getGeneral().getValue());
+            OpOpn.getPhsA().setValue(Op.get().getPhsA().getValue());
+            OpOpn.getPhsB().setValue(Op.get().getPhsB().getValue());
+            OpOpn.getPhsC().setValue(Op.get().getPhsC().getValue());
+            Pos.getStVal().setValue(OpOpn.getGeneral().getValue() ||
+                    OpOpn.getPhsA().getValue() ||
+                    OpOpn.getPhsB().getValue() ||
+                    OpOpn.getPhsC().getValue() ? CodedEnum.off : CodedEnum.on);
+        }
     }
     @Override
     public void build(String pref, String name, Integer id, String[] parameters) {
@@ -63,6 +67,6 @@ public class CSWI extends LN {
 
     @Override
     public NHMISignal getSignal(String name,String parameters) {
-        return new NHMISignal(name, Pos.getStVal());
+        return new NHMISignal(name, OpOpn.getPhsA());
     }
 }

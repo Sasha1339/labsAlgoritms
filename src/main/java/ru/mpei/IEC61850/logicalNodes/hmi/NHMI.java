@@ -61,7 +61,7 @@ public class NHMI extends LN {
 		datasets.forEach((series, rawData) -> {
 			if(rawData.getValue() instanceof Number) series.add(currentTime, (Number) rawData.getValue(), false);
 			else if(rawData.getValue() instanceof Boolean) series.add(currentTime, (Boolean) rawData.getValue() ? 1 : 0, false);
-			else if(rawData.getValue() instanceof CodedEnum) series.add(currentTime, (CodedEnum) rawData.getValue() == CodedEnum.off ? 1 : 0, false);
+			else if(rawData.getValue() instanceof CodedEnum) series.add(currentTime, rawData.getValue() == CodedEnum.off ? 1 : 0, false);
 		});
 
 		/* Период обновления */
