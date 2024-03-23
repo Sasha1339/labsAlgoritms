@@ -10,6 +10,19 @@ import ru.mpei.IEC61850.logicalNodes.LN;
 import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 import ru.mpei.IEC61850.logicalNodes.measurements.MMXU;
 
+/**
+ * Класс логического узла PTOC - токовой защиты
+ * dt - шаг дискретизации
+ * A - действующие значения токов по фазам
+ * Str - срабатывание защиты при превышении уставки
+ * Op - срабатывание защиты по факту набора времени
+ * Str - уставка по току
+ * OpDlTmms - уставка по времени
+ * cntTimeA - набор времени для фазы А по факту срабаывания Str
+ * cntTimeB - набор времени для фазы B по факту срабаывания Str
+ * cntTimeC - набор времени для фазы C по факту срабаывания Str
+ */
+
 @Slf4j
 public class PTOC extends LN {
 

@@ -6,6 +6,11 @@ import ru.mpei.IEC61850.datatypes.common.Attribute;
 import ru.mpei.IEC61850.datatypes.common.Quality;
 import ru.mpei.IEC61850.datatypes.common.Timestamp;
 
+
+/**
+ * Класс хранения информации в виде boolean
+ * single point status
+ */
 @Getter
 @Setter
 public class SPS {

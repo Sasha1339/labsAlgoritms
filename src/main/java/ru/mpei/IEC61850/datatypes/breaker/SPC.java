@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.mpei.IEC61850.datatypes.common.Attribute;
 
+/**
+ * Класс для хранения данных типа CtlModel
+ */
 @Setter
 @Getter
 public class SPC {

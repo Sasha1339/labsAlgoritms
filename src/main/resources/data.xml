@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <infoNodes>
     <logicalNodes>
-        <LN prefix="1" name="PTOC" id="1101" parameters="3; 100"/>
+        <LN prefix="1" name="PTOC" id="1101" parameters="30; 100"/>
         <LN prefix="2" name="PTOC" id="2103" parameters="2.6; 500"/>
         <LN prefix="1" name="MMXU" id="1802" parameters=""/>
         <LN prefix="1" name="LSVS" id="1006" parameters="start; PhA80"/>
@@ -18,22 +18,26 @@
         <link source="2602" dest="1404"/>
     </links>
     <signals>
-        <nhmis name="Currents">
-            <nhmi name="Ia" id="1802" parameters="Ia"/>
-            <nhmi name="Ib" id="1802" parameters="Ib"/>
-        </nhmis>
-        <nhmis name="Ic">
-            <nhmi name="Ic" id="1802" parameters="Ic"/>
-        </nhmis>
+<!--        <nhmis name="Ia">-->
+<!--            <nhmi name="Ia" id="1802" parameters="Ia"/>-->
+<!--        </nhmis>-->
+<!--        <nhmis name="Ib">-->
+<!--            <nhmi name="Ib" id="1802" parameters="Ib"/>-->
+<!--        </nhmis>-->
+<!--        <nhmis name="Ic">-->
+<!--            <nhmi name="Ic" id="1802" parameters="Ic"/>-->
+<!--        </nhmis>-->
         <nhmis name="Ia_current">
             <nhmi name="Ia_current" id="1802" parameters="Ia_d"/>
-            <nhmi name="setting" id="2103" parameters="setting"/>
+            <nhmi name="setting 2 st" id="2103" parameters="setting"/>
         </nhmis>
         <nhmis name="Ib_current">
             <nhmi name="Ib_current" id="1802" parameters="Ib_d"/>
+            <nhmi name="setting 2 st" id="2103" parameters="setting"/>
         </nhmis>
         <nhmis name="Ic_current">
             <nhmi name="Ic_current" id="1802" parameters="Ic_d"/>
+            <nhmi name="setting 2 st" id="2103" parameters="setting"/>
         </nhmis>
         <nhmis name="АУВ">
             <nhmi name="АУВ" id="2602" parameters=""/>
@@ -41,11 +45,11 @@
         <nhmis name="Выключатель">
             <nhmi name="Выключатель" id="1404" parameters=""/>
         </nhmis>
-        <nhmis name="Срабатывание 1 ст.">
-            <nhmi name="Срабатывание 1 ст." id="1101" parameters=""/>
-        </nhmis>
         <nhmis name="Срабатывание 2 ст.">
-            <nhmi name="Срабатывание 2 ст." id="2103" parameters=""/>
+            <nhmi name="Срабатывание 2 ст." id="2103" parameters="trigger"/>
         </nhmis>
+<!--        <nhmis name="Срабатывание 2 ст.">-->
+<!--            <nhmi name="Срабатывание 2 ст." id="2103" parameters=""/>-->
+<!--        </nhmis>-->
     </signals>
 </infoNodes>

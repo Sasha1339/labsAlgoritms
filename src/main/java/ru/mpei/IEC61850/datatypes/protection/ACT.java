@@ -7,6 +7,9 @@ import ru.mpei.IEC61850.datatypes.common.Attribute;
 import ru.mpei.IEC61850.datatypes.common.Quality;
 import ru.mpei.IEC61850.datatypes.common.Timestamp;
 
+/**
+ * Класс хранения информации об активации защиты
+ */
 @Getter
 @Setter
 public class ACT extends Data {

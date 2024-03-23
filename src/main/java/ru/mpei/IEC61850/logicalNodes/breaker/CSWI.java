@@ -15,6 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Класс логического узла CSWI - автоматики управления выключателем
+ * OpOpns - данные активации всех защит
+ * OpOpn - операция отключения выключателя
+ * Pos - актуальное положение выключателя
+ */
+
 @Getter
 @Setter
 @Slf4j
@@ -27,6 +35,7 @@ public class CSWI extends LN {
 
     //выходы
     public DPC Pos = new DPC();
+
 
 
     @Override

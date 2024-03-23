@@ -8,6 +8,16 @@ import ru.mpei.IEC61850.logicalNodes.LN;
 import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 import ru.mpei.IEC61850.logicalNodes.measurements.MMXU;
 
+/**
+ * Класс логического узла XCBR - модели выключателя
+ * Loc - локальное управление
+ * OpCnt - количество операций совершаемых над выключателем
+ * Pos - текущее положение выключателя
+ * BlkOpn - вывод блокировки
+ * BlkCls - ввод блокировки
+ * state - локальная переменная для подсчета операция выключателя
+ */
+
 @Getter
 @Setter
 @Slf4j
@@ -17,7 +27,6 @@ public class XCBR extends LN {
     public DPC Pos = new DPC();
     private SPC BlkOpn = new SPC();
     private SPC BlkCLs = new SPC();
-    private INS CBOpCap = new INS();
 
     //Переменные
 

@@ -7,6 +7,9 @@ import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
+/**
+ * Класс представления кофигурации в виде XML для логических узлов
+ */
 @Data
 public class LNXml extends LN {
 

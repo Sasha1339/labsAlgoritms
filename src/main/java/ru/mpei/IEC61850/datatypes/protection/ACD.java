@@ -4,6 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.mpei.IEC61850.datatypes.common.Attribute;
 
+/**
+ * Информация об активации направленной защиты
+ */
+
 @Setter
 @Getter
 public class ACD extends ACT{

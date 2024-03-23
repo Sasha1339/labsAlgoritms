@@ -7,6 +7,9 @@ import ru.mpei.IEC61850.datatypes.common.Attribute;
 import ru.mpei.IEC61850.datatypes.common.Quality;
 import ru.mpei.IEC61850.datatypes.common.Timestamp;
 
+/**
+ * Класс для хранения данных integer
+ */
 @Getter
 @Setter
 public class INS extends Data {

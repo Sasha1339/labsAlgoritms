@@ -6,6 +6,9 @@ import ru.mpei.IEC61850.datatypes.Data;
 import ru.mpei.IEC61850.datatypes.common.Quality;
 import ru.mpei.IEC61850.datatypes.common.Timestamp;
 
+/**
+ * Класс хранения данных в виде вектора (амплитуды и фазы)
+ */
 @Getter
 @Setter
 public class CMV extends Data {

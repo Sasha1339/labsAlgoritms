@@ -6,6 +6,10 @@ import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс конфигурации для объединения нескольких сигналов
+ * в одно окно NHMI, name - название обобщения
+ */
 @Data
 @XmlAccessorType(value = XmlAccessType.FIELD)
 public class InfoNHMIs {

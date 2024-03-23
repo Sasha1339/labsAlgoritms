@@ -5,6 +5,10 @@ import ru.mpei.IEC61850.datatypes.Data;
 import ru.mpei.IEC61850.datatypes.common.Quality;
 import ru.mpei.IEC61850.datatypes.common.Timestamp;
 
+/**
+ * Класс хранения выборочного значения sampled value
+ */
+
 @lombok.Data
 public class SAV extends Data {
 

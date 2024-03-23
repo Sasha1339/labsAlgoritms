@@ -1,5 +1,9 @@
 package ru.mpei.IEC61850.datatypes.breaker;
 
+/**
+ * Тип данных использующийся для логических узлов выключателя
+ * указывающий позицию состояния выключателя
+ */
 public enum CodedEnum {
     intermediate_state(0),
     off(1),

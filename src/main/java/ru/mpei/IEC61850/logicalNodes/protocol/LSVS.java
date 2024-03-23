@@ -14,6 +14,17 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+
+/**
+ * Класс лгического узла LSVS - узел администрирования
+ * path - путь до файла
+ *  fileName - имя файла
+ *  csvFileList - строки из файла
+ *  analogNumber - количесвто аналоговых занчений
+ *  digitalNumber - количесвто дискретных занчений
+ *  csvIterator - итератор по строкам файла
+ */
+
 @Getter @Setter
 
 public class LSVS extends LN {
@@ -78,6 +89,12 @@ public class LSVS extends LN {
         return this.csvIterator.hasNext();
     }
 
+    /**
+     * метод открытия файла и чтения всех строк из него в csvFileList
+     * инициализация итератора по файлу
+     * @param fileName
+     * @throws Exception
+     */
     public void setFileName(String fileName) throws Exception{
         this.fileName = fileName;
 

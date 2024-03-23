@@ -5,6 +5,10 @@ import lombok.Setter;
 import ru.mpei.IEC61850.datatypes.Data;
 import ru.mpei.IEC61850.datatypes.common.Attribute;
 
+/**
+ * Класс для хранения информации уставки в виде integer
+ */
+
 @Getter
 @Setter
 public class ING extends Data {

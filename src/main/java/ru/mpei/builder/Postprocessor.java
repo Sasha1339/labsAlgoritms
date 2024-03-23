@@ -13,6 +13,11 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+/**
+ * Класс автоматического создания объектов из конфигурации
+ * автоматической настройки связей между объектами
+ * автоматической настройки сигналов NHMI
+ */
 
 public class Postprocessor {
     private static Map<Integer, LN> objectsLogicNodes = new HashMap<>();
@@ -21,6 +26,17 @@ public class Postprocessor {
 
     private static List<LN> logicalNodesList = new ArrayList<>();
 
+
+    static {
+        getInfo();
+        build();
+        setNHMI();
+        execute();
+    }
+
+    /**
+     * считывание конфигурационного файла
+     */
     @SneakyThrows
     private static void getInfo(){
         JAXBContext context = JAXBContext.newInstance(InfoNodes.class);
@@ -30,13 +46,9 @@ public class Postprocessor {
         );
     }
 
-    static {
-        getInfo();
-        build();
-        setNHMI();
-        execute();
-    }
-
+    /**
+     * настройка NHMI сигналов в соответствии с конфигурацией
+     */
     public static void setNHMI(){
         NHMI nhmi = new NHMI(0.250);
         infoNodes.getSignalNHMIs().forEach(e -> {
@@ -49,6 +61,9 @@ public class Postprocessor {
         logicalNodesList.add(nhmi);
     }
 
+    /**
+     * основной метод автоматического создания объектов LN
+     */
     public static void build(){
 
         Reflections reflections = new Reflections(LN.class);
@@ -98,6 +113,9 @@ public class Postprocessor {
         });
     }
 
+    /**
+     * Выполнение процессов
+     */
     public static void execute(){
         LSVS lsvs = (LSVS) logicalNodesList.stream().filter(e -> e.getClass() == LSVS.class).findFirst().orElse(new LSVS());
         while (lsvs.hasNext()) {
