@@ -86,6 +86,8 @@ public class PTOC extends LN {
     public NHMISignal getSignal(String name, String parameters) {
         if (parameters.contains("trigger")){
             return new NHMISignal(name, Str.getPhsA());
+        } else if(parameters.contains("setting")){
+            return new NHMISignal(name, StrVal.getSetMag().getF());
         }
         return new NHMISignal(name, Op.getPhsA());
     }

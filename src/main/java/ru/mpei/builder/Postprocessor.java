@@ -38,9 +38,13 @@ public class Postprocessor {
     }
 
     public static void setNHMI(){
-        NHMI nhmi = new NHMI();
-        infoNodes.getSignalNHMI().forEach(e -> {
-            nhmi.addSignals(e.getName(), objectsLogicNodes.get(e.getId()).getSignal(e.getName(), e.getParameters()));
+        NHMI nhmi = new NHMI(0.250);
+        infoNodes.getSignalNHMIs().forEach(e -> {
+            List<NHMISignal> signals = new ArrayList<>();
+            for (InfoNHMI info: e.getSignalNHMI()){
+                signals.add(objectsLogicNodes.get(info.getId()).getSignal(info.getName(), info.getParameters()));
+            }
+            nhmi.addSignals(e.getName(), signals);
         });
         logicalNodesList.add(nhmi);
     }
@@ -64,7 +68,7 @@ public class Postprocessor {
                     object.build(e.getPref(),
                             e.getClazz(),
                             e.getInst(),
-                            e.getOtherParameters().replace(" ", "").split(","));
+                            e.getOtherParameters().replace(" ", "").split(";"));
                 } else {
                     object.build(e.getPref(),
                             e.getClazz(),

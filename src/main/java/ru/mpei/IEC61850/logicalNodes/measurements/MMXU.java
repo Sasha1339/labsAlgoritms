@@ -1,6 +1,7 @@
 package ru.mpei.IEC61850.logicalNodes.measurements;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.mpei.IEC61850.datatypes.common.Attribute;
 import ru.mpei.IEC61850.datatypes.measurements.SAV;
 import ru.mpei.IEC61850.datatypes.measurements.WYE;
 import ru.mpei.IEC61850.logicalNodes.LN;
@@ -31,6 +32,10 @@ public class MMXU extends LN {
 
     //переменные
 
+    private final Attribute<Double> currentIa = new Attribute<>(0.0);
+    private final Attribute<Double> currentIb = new Attribute<>(0.0);
+    private final Attribute<Double> currentIc = new Attribute<>(0.0);
+
     private final Filter ia = new FourierFilter(bufSize);
 
     private final Filter ib = new FourierFilter(bufSize);
@@ -38,8 +43,11 @@ public class MMXU extends LN {
     @Override
     public void process() {
         this.ia.process(this.IaInst, A.getPhsA().getCVal());
+        currentIa.setValue(A.getPhsA().getCVal().getMag().getF().getValue());
         this.ib.process(this.IbInst, A.getPhsB().getCVal());
+        currentIb.setValue(A.getPhsB().getCVal().getMag().getF().getValue());
         this.ic.process(this.IcInst, A.getPhsC().getCVal());
+        currentIc.setValue(A.getPhsC().getCVal().getMag().getF().getValue());
     }
 
     @Override
@@ -68,7 +76,14 @@ public class MMXU extends LN {
     @Override
     public NHMISignal getSignal(String name, String parameters) {
         if (parameters != null) {
-            if (parameters.contains("U") || parameters.contains("u")) {
+            if (parameters.contains("d") && (parameters.contains("I") || parameters.contains("i"))) {
+                if (parameters.contains("A") || parameters.contains("a"))
+                    return new NHMISignal(name, currentIa);
+                else if (parameters.contains("B") || parameters.contains("b"))
+                    return new NHMISignal(name, currentIb);
+                else if (parameters.contains("C") || parameters.contains("c"))
+                    return new NHMISignal(name, currentIc);
+            }else if (parameters.contains("U") || parameters.contains("u")) {
                 if (parameters.contains("A") || parameters.contains("a"))
                     return new NHMISignal(name, UaInst.getInstMag().getF());
                 else if (parameters.contains("B") || parameters.contains("b"))

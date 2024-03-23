@@ -20,8 +20,8 @@ public class InfoNodes {
     private List<Link> link = new ArrayList<>();
 
     @XmlElementWrapper(name="signals")
-    @XmlElement(name="nhmi")
-    private List<InfoNHMI> signalNHMI = new ArrayList<>();
+    @XmlElement(name="nhmis")
+    private List<InfoNHMIs> signalNHMIs = new ArrayList<>();
 
 
 }

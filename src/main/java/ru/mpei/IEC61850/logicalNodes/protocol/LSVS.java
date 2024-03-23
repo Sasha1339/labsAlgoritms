@@ -18,6 +18,10 @@ import java.util.List;
 
 public class LSVS extends LN {
 
+    private String pathStart = "C:\\Users\\serge\\OneDrive\\Рабочий стол\\1 курс магистратура, Э-13м-23\\Алгоритмы РЗА\\Опыты\\Начало линии\\";
+
+    private String pathEnd = "C:\\Users\\serge\\OneDrive\\Рабочий стол\\1 курс магистратура, Э-13м-23\\Алгоритмы РЗА\\Опыты\\Конец линии\\";
+
     private String path;
     private String fileName;
 
@@ -50,8 +54,12 @@ public class LSVS extends LN {
     @Override
     @SneakyThrows
     public void build(String pref, String name, Integer id, String[] parameters) {
-        setPath("C:\\Users\\serge\\OneDrive\\Рабочий стол\\1 курс магистратура, Э-13м-23\\Алгоритмы РЗА\\Опыты\\Начало линии\\");
-        setFileName(parameters[0]);
+        if (parameters[0].contains("end") || parameters[0].contains("конец")){
+            setPath(this.pathEnd);
+        } else {
+            setPath(this.pathStart);
+        }
+        setFileName(parameters[1]);
         this.pref = pref;
         this.clazz = name;
         this.inst = id;

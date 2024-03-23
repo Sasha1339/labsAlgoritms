@@ -40,7 +40,7 @@ public class FourierFilter extends Filter{
         a = k * a;
         b = k * b;
 
-        vector.getMag().getF().setValue(Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)));
+        vector.getMag().getF().setValue(Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2))/Math.sqrt(2));
         vector.getAng().getF().setValue(Math.atan(b / a));
         if (++cnt >= buffer.length){
             cnt = 0;

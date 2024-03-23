@@ -29,6 +29,8 @@ import ru.mpei.IEC61850.logicalNodes.hmi.other.NHMISignal;
  */
 public class NHMI extends LN {
 
+	private double dt = 1.0;
+
 	private final HashMap<XYSeries, Attribute<?>> datasets = new HashMap<>();
 	private final CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new NumberAxis("Время"));;
 	private final JFrame frame = new JFrame();
@@ -37,7 +39,8 @@ public class NHMI extends LN {
 	private double currentTime = 0.0;
 
 
-	public NHMI(){
+	public NHMI(double dt){
+		this.dt = dt;
 		JFreeChart chart = new JFreeChart("", plot);
 		chart.setBorderPaint(Color.black);
 		chart.setBorderVisible(true);
@@ -57,7 +60,7 @@ public class NHMI extends LN {
 	public void process(){
 		if(!frame.isVisible()) frame.setVisible(true);
 
-		currentTime += 1;
+		currentTime += 1*dt;
 		datasets.forEach((series, rawData) -> {
 			if(rawData.getValue() instanceof Number) series.add(currentTime, (Number) rawData.getValue(), false);
 			else if(rawData.getValue() instanceof Boolean) series.add(currentTime, (Boolean) rawData.getValue() ? 1 : 0, false);

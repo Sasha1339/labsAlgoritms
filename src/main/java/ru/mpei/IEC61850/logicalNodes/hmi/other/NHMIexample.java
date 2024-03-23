@@ -23,7 +23,7 @@ public class NHMIexample {
 
     public static void main(String[] args) {
 
-        NHMI nhmi = new NHMI();
+        NHMI nhmi = new NHMI(1.0);
         logicalNodes.add(nhmi);
 
         Attribute<Double> signal1 = new Attribute<>(0.0);
