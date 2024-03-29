@@ -50,7 +50,7 @@ public class XCBR extends LN {
         if (logicNode instanceof CSWI cswi){
             Pos = cswi.Pos;
         } else {
-            log.error("Не правильно задан ID логического угла в конфигурации связей");
+            log.error("Не правильно задан ID логического узла в конфигурации связей");
         }
     }
 

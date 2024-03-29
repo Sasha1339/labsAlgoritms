@@ -70,7 +70,7 @@ public class CSWI extends LN {
         if (logicNode instanceof PTOC ptoc){
             OpOpns.add(ptoc.Op);
         } else {
-            log.error("Не правильно задан ID логического угла в конфигурации связей");
+            log.error("Не правильно задан ID логического узла в конфигурации связей");
         }
     }
 

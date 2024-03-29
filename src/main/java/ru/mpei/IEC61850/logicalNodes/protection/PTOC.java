@@ -91,7 +91,7 @@ public class PTOC extends LN {
         if (logicNode instanceof MMXU mmxu){
             A = mmxu.A;
         } else {
-            log.error("Не правильно задан ID логического угла в конфигурации связей");
+            log.error("Не правильно задан ID логического узла в конфигурации связей");
         }
     }
 

@@ -79,7 +79,7 @@ public class MMXU extends LN {
                 UcInst = lsvs.getOut().get(5);
             }
         } else {
-            log.error("Не правильно задан ID логического угла в конфигурации связей");
+            log.error("Не правильно задан ID логического узла в конфигурации связей");
         }
     }
 
